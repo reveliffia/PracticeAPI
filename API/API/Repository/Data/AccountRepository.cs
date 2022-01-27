@@ -29,10 +29,6 @@ namespace API.Repository.Data
             var pass = context.Accounts.Where(a => a.NIK == cekEmailPhone.NIK).FirstOrDefault();
             var cE = cekEmailPhone.Email.Contains(acc.Email);
             var cP = bc.BCrypt.Verify(acc.Password, pass.Password);
-            //if (phone.Phone != null && bc.BCrypt.Verify(acc.Password, pass.Password))
-            //{
-            //    result = 1;
-            //}
             if (cE == true && cP)
             {
                 result = 1;
@@ -81,14 +77,14 @@ namespace API.Repository.Data
                 string smtpAddress = "smtp.gmail.com";
                 int portNumber = 587;
                 bool enableSSL = true;
-                string emailFromAddress = "aliffiaklm@gmail.com"; //Sender Email Address
-                string password = "hanbocil"; //Sender Password
+                string emailFromAddress = "aliffiakulsumarwati@gmail.com"; //Sender Email Address
+                string password = "Karawang150798; //Sender Password
                 string emailToAddress = accountVM.Email; //Receiver Email Address
                 string subject = "Hello";
                 string body = "Hello, This is Email sending test using gmail.";
 
                 MailMessage mail = new MailMessage();
-                mail.From = new MailAddress("aliffiaklm@gmail.com");
+                mail.From = new MailAddress(emailFromAddress);
                 mail.To.Add(emailToAddress);
                 mail.Subject = subject;
                 mail.Body = body;

@@ -90,8 +90,7 @@ namespace API.Repository.Data
             else
             {
                 return 4; //email exist
-            }
-            
+            }            
         }
 
         public bool IsEmailExist(RegisterVM reg)
@@ -145,8 +144,6 @@ namespace API.Repository.Data
                               GPA = edu.GPA,
                               UnivName = univ.Name
                           }).ToList();
-
-
             return result;
         }
 

@@ -13,6 +13,5 @@ namespace API.ViewModel
         public int OTP { get; set; }
         public DateTime ExpiredToken { get; set; }
         public Boolean isUsed { get; set; }
-
     }
 }

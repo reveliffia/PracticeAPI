@@ -29,7 +29,8 @@ namespace API.Controllers
             var result = accountRepository.Login(acc);
             if (result != 1)
             {
-                return StatusCode(400, new { status = HttpStatusCode.NotFound, result, message = "ACCOUNT TIDAK DITEMUKAN" });
+                return StatusCode(400, new { status = HttpStatusCode.NotFound, 
+                    result, message = "ACCOUNT TIDAK DITEMUKAN" });
             }
             else
             {
@@ -40,7 +41,11 @@ namespace API.Controllers
             }
         }
 
-
+        [HttpGet("Forgot")]
+        public ActionResult ForgotPassword(AccountVM accountVM)
+        {
+            var result = accountRepository.ForgotPassword(accountVM);
+            return Ok();
+        }
     }
-
 }
