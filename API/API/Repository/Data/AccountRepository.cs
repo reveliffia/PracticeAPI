@@ -1,6 +1,7 @@
 ﻿using API.Context;
 using API.Models;
 using API.ViewModel;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -68,20 +69,33 @@ namespace API.Repository.Data
             return result;
         }
 
-        public int ForgotPassword(AccountVM accountVM)
+        public int ForgotPassword(AccountVM acc)
         {
-            var emailNow = (from g in context.Employees where g.Email == accountVM.Email select g).FirstOrDefault<Employee>();
+            var emailNow = (from g in context.Employees where g.Email == acc.Email select g).FirstOrDefault<Employee>();
             if (emailNow != null)
             {
-
+                string numbers = "123456789";
+                Random random = new Random();
+                string otp = string.Empty;
+                for (int i = 0; i < 6; i++)
+                {
+                    int tempval = random.Next(0, numbers.Length);
+                    otp += tempval;
+                }
+                var accountNow = (from g in context.Accounts where g.NIK == emailNow.NIK select g).FirstOrDefault<Account>();
                 string smtpAddress = "smtp.gmail.com";
                 int portNumber = 587;
                 bool enableSSL = true;
-                string emailFromAddress = "aliffiakulsumarwati@gmail.com"; //Sender Email Address
-                string password = "Karawang150798; //Sender Password
-                string emailToAddress = accountVM.Email; //Receiver Email Address
-                string subject = "Hello";
-                string body = "Hello, This is Email sending test using gmail.";
+                string emailFromAddress = "aliffiakulsumarwati@gmail.com"; //Sender Email Address  
+                string password = "Karawang150798"; //Sender Password  
+                string emailToAddress = acc.Email; //Receiver Email Address  
+                string subject = "OTP " + DateTime.Now;
+                string body = "Hello, This is your OTP " + otp;
+                accountNow.OTP = Convert.ToInt32(otp);
+                accountNow.ExpiredToken = DateTime.Now.AddMinutes(5);
+                accountNow.isUsed = false; //belum dipake otp-nya
+                context.Entry(accountNow).State = EntityState.Modified; //insert data di account
+                context.SaveChanges();
 
                 MailMessage mail = new MailMessage();
                 mail.From = new MailAddress(emailFromAddress);
@@ -89,25 +103,104 @@ namespace API.Repository.Data
                 mail.Subject = subject;
                 mail.Body = body;
                 mail.IsBodyHtml = true;
-                //mail.Attachments.Add(new Attachment("D:\TestFile.txt"));//--Uncomment this to send any attachment
+                //mail.Attachments.Add(new Attachment("D:\\TestFile.txt"));//--Uncomment this to send any attachment  
                 using (SmtpClient smtp = new SmtpClient(smtpAddress, portNumber))
                 {
                     smtp.Credentials = new NetworkCredential(emailFromAddress, password);
                     smtp.EnableSsl = enableSSL;
                     smtp.Send(mail);
                 }
+                return 1;
             }
-            return 1;
+            else
+            {
+                return 2; //email not found
+            }
+
         }
 
+        public int ChangePassword(AccountVM acc)
+        {
+            var emailNow = (from g in context.Employees where g.Email == acc.Email select g).FirstOrDefault<Employee>();
+            if (emailNow != null)
+            {
+                var accountNow = (from g in context.Accounts where g.NIK == emailNow.NIK select g).FirstOrDefault<Account>();
+                if (accountNow != null)
+                {
+                    if (accountNow.OTP == acc.OTP)
+                    {
+                        if (DateTime.Now < accountNow.ExpiredToken)
+                        {
+                            if (accountNow.isUsed == false)
+                            {
+                                if (acc.Password == acc.ConfirmPass)
+                                {
+                                    accountNow.Password = BCrypt.Net.BCrypt.HashPassword(acc.Password);
+                                    accountNow.isUsed = true;
+                                    context.Entry(accountNow).State = EntityState.Modified;
+                                    context.SaveChanges();
+                                    return 1; //berhasil
+                                }
+                                else
+                                {
+                                    return 2; //Password & ConfirmPass ga sama
+                                }
+                            }
+                            else
+                            {
+                                return 3; //OTP udah dipakai
+                            }
+                        }
+                        else
+                        {
+                            return 4; //OTP expired
+                        }
+                    }
+                    else
+                    {
+                        return 5; //OTP salah
+                    }
+                }
 
-        /*  ViewState["msgotp"] = otp;
-          string msg = "your otp from abc.com is " + otp;
-          bool f = SendOTP("from@from.com", "to@to.com", "Subjected to OTP", msg);
-          if (f)
-          { response.write("otp sent successfully"); }
-          else { response.write("otp not sent"); }*/
+            }
+            return 0;
+        }
+
     }
 
-    
+    /*  public int ForgotPassword(AccountVM accountVM)
+      {
+          var emailNow = (from g in context.Employees where g.Email == accountVM.Email select g).FirstOrDefault<Employee>();
+          if (emailNow != null)
+          {
+
+              string smtpAddress = "smtp.gmail.com";
+              int portNumber = 587;
+              bool enableSSL = true;
+              string emailFromAddress = "aliffiakulsumarwati@gmail.com"; //Sender Email Address
+              string password = "Karawang150798"; //Sender Password
+              string emailToAddress = accountVM.Email; //Receiver Email Address
+              string subject = "Hello";
+              string body = "Hello, This is Email sending test using gmail.";
+
+              MailMessage mail = new MailMessage();
+              mail.From = new MailAddress(emailFromAddress);
+              mail.To.Add(emailToAddress);
+              mail.Subject = subject;
+              mail.Body = body;
+              mail.IsBodyHtml = true;
+              //mail.Attachments.Add(new Attachment("D:\TestFile.txt"));//--Uncomment this to send any attachment
+              using (SmtpClient smtp = new SmtpClient(smtpAddress, portNumber))
+              {
+                  smtp.Credentials = new NetworkCredential(emailFromAddress, password);
+                  smtp.EnableSsl = enableSSL;
+                  smtp.Send(mail);
+              }
+          }
+          return 1;
+      }*/
+
 }
+
+    
+

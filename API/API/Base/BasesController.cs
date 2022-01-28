@@ -58,7 +58,7 @@ namespace API.Base
             }
             else 
             {
-                return StatusCode(200, new { status = HttpStatusCode.BadRequest, message = "insert berhasil" });
+                return StatusCode(200, new { status = HttpStatusCode.OK, message = "insert berhasil" });
             }
         }
         [HttpPut]

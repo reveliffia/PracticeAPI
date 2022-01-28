@@ -8,12 +8,7 @@ using System.Threading.Tasks;
 namespace API.ViewModel
 {
     public class RegisterVM
-    {
-        //private readonly ILazyLoader _lazyLoader;
-       /* public RegisterVM()
-        {
-            Track = new HashSet<RegisterVM>();
-        }*/
+    {      
 
         public string NIK { get; set; }
         public string FirstName { get; set; }
@@ -26,9 +21,7 @@ namespace API.ViewModel
         public string Degree { get; set; }
         public string GPA { get; set; }
         public int University_Id { get; set; }
-        public Gender Gender { get; set; }
-       /* public virtual Employee Employee { get; set; }
-        public virtual ICollection<RegisterVM> Track { get; set; }*/
+        public Gender Gender { get; set; }       
     }
     public enum Gender
     {

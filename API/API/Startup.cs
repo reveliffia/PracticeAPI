@@ -31,6 +31,7 @@ namespace API
             services.AddControllers();
             services.AddScoped<EmployeeRepository>();
             services.AddScoped<AccountRepository>();
+            services.AddScoped<RoleRepository>();            
             /*services.AddScoped<ProfilingRepository>();
             services.AddScoped<EducationRepository>();*/
             services.AddScoped<UniversityRepository>();
