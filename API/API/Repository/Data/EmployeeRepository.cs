@@ -159,17 +159,6 @@ namespace API.Repository.Data
                               Role = role.Name
                           }).ToList();
             return result;
-        }
-
-       /* public int Login()
-        {
-            var employees = context.Employees;
-            var accounts = context.Accounts;
-            var profillings = context.Profilings;
-            var educations = context.Educations;
-            var 
-
-        }*/
-    }
-    
+        }      
+    }    
 }

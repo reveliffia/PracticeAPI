@@ -2,6 +2,7 @@
 using API.Models;
 using API.ViewModel;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,11 +17,11 @@ namespace API.Repository.Data
     public class AccountRepository : GeneralRepository<MyContext, Account, string>
     {
         private readonly MyContext context;
+        
         public AccountRepository(MyContext myContext) : base(myContext)
         {
             this.context = myContext;
         }
-
 
         public int Login(AccountVM acc)
         {
@@ -165,7 +166,6 @@ namespace API.Repository.Data
             }
             return 0;
         }
-
     }
 
     /*  public int ForgotPassword(AccountVM accountVM)

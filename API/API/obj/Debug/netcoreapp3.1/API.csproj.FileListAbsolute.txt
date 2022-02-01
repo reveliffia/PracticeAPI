@@ -141,3 +141,4 @@ C:\Users\LENOVO\Documents\GitHub\PracticeAPI\API\API\obj\Debug\netcoreapp3.1\API
 C:\Users\LENOVO\Documents\GitHub\PracticeAPI\API\API\obj\Debug\netcoreapp3.1\API.dll
 C:\Users\LENOVO\Documents\GitHub\PracticeAPI\API\API\obj\Debug\netcoreapp3.1\API.pdb
 C:\Users\LENOVO\Documents\GitHub\PracticeAPI\API\API\obj\Debug\netcoreapp3.1\API.genruntimeconfig.cache
+C:\Users\LENOVO\Documents\GitHub\PracticeAPI\API\API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
