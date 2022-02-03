@@ -35,9 +35,7 @@ namespace API
             services.AddScoped<EmployeeRepository>();
             services.AddScoped<AccountRepository>();
             services.AddScoped<RoleRepository>();            
-            services.AddScoped<AccountRoleRepository>();            
-            /*services.AddScoped<ProfilingRepository>();
-            services.AddScoped<EducationRepository>();*/
+            services.AddScoped<AccountRoleRepository>();
             services.AddScoped<UniversityRepository>();
             services.AddDbContext<MyContext>(options =>
             options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("APIContext")));
@@ -52,7 +50,10 @@ namespace API
             services.AddControllersWithViews()
             .AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
             services.AddAuthentication(auth =>
             {
                 auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -85,6 +86,7 @@ namespace API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(options => options.AllowAnyOrigin());
             app.UseHttpsRedirection();
 
             app.UseRouting();

@@ -53,12 +53,8 @@ namespace API.Controllers
             else
             {
                 var getUserData = context.Employees.Where(e => e.Email == acc.Email
-                || e.Phone == acc.Phone).FirstOrDefault(); //get email & role name
-                //var account = context.Accounts.Where(a => a.NIK == getUserData.NIK).FirstOrDefault();
-                //var role = context.AccountRoles.Where(a => a.Account_Id == account.NIK).FirstOrDefault();
-                var getRole = context.Roles.Where(a => a.AccountRoles.Any(ar => ar.Account.NIK == getUserData.NIK)).ToList();
-
-                //var getRoleName = accountRepository.Profile(acc);
+                || e.Phone == acc.Phone).FirstOrDefault();             
+                var getRole = context.Roles.Where(a => a.AccountRoles.Any(ar => ar.Account.NIK == getUserData.NIK)).ToList();             
 
                 var claims = new List<Claim>
                 {
