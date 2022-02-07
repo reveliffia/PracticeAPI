@@ -90,7 +90,8 @@ $.ajax({
 function detailSW(url) {
     ability = "";
     newtype = "";
-    stat = "";    
+    stat = "";
+    move = "";
 
     $.ajax({
         url: url,
@@ -102,7 +103,12 @@ function detailSW(url) {
             result.stats.forEach(s => {
                 stat += `<tr>
                             <td>${s.stat.name}</td>
-                            <td clas="col-8">: ${s.base_stat}</td>
+                            <td clas="col-8">
+                            <div class="stat">
+                              <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: ${s.base_stat}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">${s.base_stat}%</div>
+                            </div>                          
+                                
+                            </td>
                         </tr>`
             })
             result.types.forEach(t => {
@@ -129,6 +135,10 @@ function detailSW(url) {
                     newtype += `<span class="badge badge-pill badge-muted">${type}</span>`
                 }
             })
+            result.moves.forEach(m => {
+                move += `<div class="badge badge-pill badge-primary text-dark">${m.move.name}\n</div>`
+            })
+
             console.log(result);
 
             text = "";
@@ -136,36 +146,52 @@ function detailSW(url) {
                     <div class="row">
                         <img src="${result.sprites.other.dream_world.front_default}" alt="" class="rounded-circle border img-fluid mx-auto d-block shadow-lg">
                     </div>
-                    <div class="row justify-content-center">
-                           ${newtype}
-                    </div>                    
-
-                    <div class="row-auto border center bg-info text-light text-center">Detail
+                    <div class="row justify-content-center my-3">
+                        ${newtype}
                     </div>
-                    <table class="table table-hover">
-                        <tr>
-                            <td>Name</td>
-                            <td clas="col-8">: ${result.name}</td>
-                        </tr>
-                        <tr>
-                            <td>Weight</td>
-                            <td clas="col-8">: ${result.weight}</td>
-                        </tr>
-                        <tr>
-                            <td>height</td>
-                            <td clas="col-8">: ${result.height}</td>
-                        </tr>
-                        <tr>
-                            <td>Abilities</td>
-                            <td clas="col-8">: ${ability}</td>
-                        </tr>
-                        </table>
-                     
-                    <div class="row-auto border center bg-info text-light text-center">Stat
-                     </div>
-                    <table class="table table-hover">
-                        ${stat}
-                    </table>
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Detail</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Stat</a>
+                        <a class="nav-item nav-link" id="nav-move-tab" data-toggle="tab" href="#nav-move" role="tab" aria-controls="nav-profile" aria-selected="false">Moves</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="row-auto border center bg-info text-light text-center">Detail</div>
+                            <table class="table table-hover">
+                                <tr>
+                                    <td>Name</td>
+                                    <td clas="col-8">: ${result.name}</td>
+                                </tr>
+                                <tr>
+                                    <td>Weight</td>
+                                    <td clas="col-8">: ${result.weight}</td>
+                                </tr>
+                                <tr>
+                                    <td>height</td>
+                                    <td clas="col-8">: ${result.height}</td>
+                                </tr>
+                                <tr>
+                                    <td>Abilities</td>
+                                    <td clas="col-8">: ${ability}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <div class="row-auto border center bg-info text-light text-center">Stat</div>
+                            <table class="table table-hover">
+                                ${stat}
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="nav-move" role="tabpanel" aria-labelledby="nav-move-tab">
+                            <div class="row-auto border center bg-info text-light text-center">Moves</div>
+                            <div class="row justify-content-center my-2">
+                              ${move}
+                            </div>
+                        </div>
+                    </div>
+
                    `
             $('.modal-body').html(text);
         }
