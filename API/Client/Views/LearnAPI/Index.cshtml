@@ -2,26 +2,58 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1 class="text-center">Star Wars The Rise Of Skywalker</h1>
+<h1 class="text-center">POKEMON THE MOVIE</h1>
 @*<ul id="listSW">
-    li
-</ul>*@
+        li
+    </ul>*@
 
-<table class="table table-hover">
+<table class="table table-hover" id="datatableSW">
     <thead class="alert-warning">
         <tr>
+            <td>No</td>
             <td>Name</td>
-            <td>Eye Color</td>
-            <td>Skin Color</td>
-            <td>Height</td>
-            <td>Gender</td>
-        </tr>
+            <td>Action</td>
+
     </thead>
     <tbody class="tableSW">
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+        @* <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>*@
     </tbody>
 </table>
+
+<!-- Modal -->
+<div class="modal fade" id="modalSW" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detail Pokemonku</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Large modal -->
+<!--<button type="button" class="btn btn-primary" id="modalSW" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-body">
+            ...
+        </div>
+    </div>
+</div>-->
